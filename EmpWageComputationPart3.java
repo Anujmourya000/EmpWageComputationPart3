@@ -6,9 +6,9 @@ public class EmpWageComputationPart3 {
 	private int WAGE_PER_HOUR = 20;
 	private int FULL_DAY_HOUR = 8;
 	private int HALF_DAY_HOUR = 4;
-	private int WORKING_DAYS_PER_MONTH = 20;
+	private static int TOTAL_WORKING_HOURS = 100;
+	private static int WORKING_DAYS_PER_MONTH = 20;
 	
-	public static Integer empCheck = (int) Math.floor(Math.random() * 10) % 2;
 	//Constructor
 	public EmpWageComputationPart3(int WAGE_PER_HOUR, int FULL_DAY_HOUR, int HALF_DAY_HOUR, int WORKING_DAYS_PER_MONTH) {
 		this.WAGE_PER_HOUR = WAGE_PER_HOUR;
@@ -16,21 +16,34 @@ public class EmpWageComputationPart3 {
 		this.HALF_DAY_HOUR = HALF_DAY_HOUR;
 		this.WORKING_DAYS_PER_MONTH = WORKING_DAYS_PER_MONTH;
 	}
-	public static void main(String[] args) {
+	
+	public static void CalculatingWages() {
+		int emphrs=0; int totalEmpHrs=0; int totalWorkingDays = 0;
 		
-		switch(empCheck) {
-		case IS_PRESENT:
-			EmpWageComputationPart3 empWage1 = new EmpWageComputationPart3(20, 8, 0, 20);
-			EmpWageComputationPart3 empWage2 = new EmpWageComputationPart3(20, 0, 4, 20);
-			int monthlyWagesofFulltime = (empWage1.WAGE_PER_HOUR * empWage1.FULL_DAY_HOUR * empWage1.WORKING_DAYS_PER_MONTH);
-			int monthlyWagesofParttime = (empWage2.WAGE_PER_HOUR * empWage2.HALF_DAY_HOUR * empWage2.WORKING_DAYS_PER_MONTH);
-			System.out.println("Full time Employee monthly wages is: "+monthlyWagesofFulltime);
-			System.out.println("Part time Employee monthly wages is: "+monthlyWagesofParttime);
-			break;
+		while(totalEmpHrs <= TOTAL_WORKING_HOURS && totalWorkingDays <= WORKING_DAYS_PER_MONTH) {
+			totalWorkingDays++;
+			totalEmpHrs=totalEmpHrs+8;
+			Integer empCheck = (int) Math.floor(Math.random() * 10) % 2;
 			
-		case IS_ABSENT: 
-			System.out.println("Employee is absent");
+			switch(empCheck) {
+			case IS_PRESENT:
+				EmpWageComputationPart3 empWage1 = new EmpWageComputationPart3(20, 8, 0, 20);
+				EmpWageComputationPart3 empWage2 = new EmpWageComputationPart3(20, 0, 4, 20);
+				int WagesofFulltime = (empWage1.WAGE_PER_HOUR * totalEmpHrs * totalWorkingDays);
+				int WagesofParttime = (empWage2.WAGE_PER_HOUR * (totalEmpHrs/2) * totalWorkingDays);
+				System.out.println("Full time Employee monthly wages is: "+WagesofFulltime);
+				System.out.println("Part time Employee monthly wages is: "+WagesofParttime);
+				break;
+			
+			case IS_ABSENT: 
+				System.out.println("Employee is absent");
+			}
 		}
+		
 	}
-
+	public static void main(String[] args) {
+		CalculatingWages();
+		
+		
+	}
 }
